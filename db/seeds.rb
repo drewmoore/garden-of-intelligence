@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+require "faker"
+
+def create_plan
+    Plant.create(
+        name: Faker::Food.vegetables,
+        botanical_name: Faker::Lorem.sentence(word_count: 2),
+        description: Faker::Food.description
+    )
+end
+
+10.times { create_plan }

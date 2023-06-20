@@ -1,0 +1,27 @@
+version: '3'
+services:
+ db:
+  image: postgres:alpine
+  container_name: garden-of-intelligence-db
+  restart: always
+  environment:
+      POSTGRES_DB: "db"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+  volumes:
+   - ./tmp/db:/var/lib/postgresql/data
+  ports:
+    - "5432:5432"
+ app:
+  container_name: garden-of-intelligence-app
+  build: .
+  restart: always
+  command: bash -c "rm -f tmp/pids/server.pid && rails s -p 3000 -b '0.0.0.0'"
+  volumes:
+   - .:/garden-of-intelligence
+   - bundle_path:/bundle
+  ports:
+   - "3000:3000"
+  tty: true
+  stdin_open: true
+volumes:
+  bundle_path:

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -eux
+
+INIT_FLAG_FILE=./tmp/.initflag
+
+if [[ ! -f "$INIT_FLAG_FILE" ]]; then
+    echo "Running bundle exec rake db:drop"
+    bundle exec rake db:drop
+
+    echo "Running db:create"
+    bundle exec rake db:create
+
+    echo "Running db:schema:load"
+    bundle exec rake db:schema:load
+
+    echo "Running db:seed"
+    bundle exec rake db:seed
+
+    # Create the file indicating that the project has already been setup
+    touch ${INIT_FLAG_FILE}
+else
+    echo "Skipping the setup as the project has either already been setup"
+    echo "If you want to run the setup again you can use: Docker-compose down / up"
+fi
+
+rm -f /app/tmp/pids/server.pid
+
+bundle exec rails server -b "0.0.0.0" -p 3000

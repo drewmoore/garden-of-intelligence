@@ -13,6 +13,11 @@ data "aws_iam_policy_document" "app-garden-of-intelligence-assume-role" {
       identifiers = ["build.apprunner.amazonaws.com"]
     }
   }
+
+  #statement {
+  #  actions  = ["rds-db:connect"]
+  #  resource = "arn:aws:rds-db:eu-west-1:sandbox:dbuser:<DB_RESOURCE_ID>/<DB_USER>"
+  #}
 }
 
 resource "aws_iam_role_policy_attachment" "myrolespolicy" {

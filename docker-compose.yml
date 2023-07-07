@@ -1,27 +1,35 @@
 version: '3'
 services:
  db:
-  image: postgres:alpine
+  image: postgres:13.1-alpine
   container_name: garden-of-intelligence-db
   restart: always
   environment:
-      POSTGRES_DB: "db"
-      POSTGRES_HOST_AUTH_METHOD: "trust"
+    - POSTGRES_PASSWORD=postgres
   volumes:
-   - ./tmp/db:/var/lib/postgresql/data
+   - ./tmp/postgres/data:/var/lib/postgresql/data
   ports:
-    - "5432:5432"
+   - "${DOCKER_POSTGRES_PORT-5432}:5432"
+  healthcheck:
+    test: CMD curl -f http://localhost:5432 || exit 1
+    interval: 1s
+    timeout: 30s
+    retries: 10
+    start_period: 30s
+
  app:
   container_name: garden-of-intelligence-app
-  build: .
-  restart: always
-  command: bash -c "rm -f tmp/pids/server.pid && rails s -p 3000 -b '0.0.0.0'"
+  build:
+    context: .
+    args: 
+      BUNDLE_WITHOUT: ""
+  command: bin/start_local
+  environment:
+      - DATABASE_URL
   volumes:
-   - .:/garden-of-intelligence
-   - bundle_path:/bundle
+    - .:/home/rails/app
+    - /home/rails/app/tmp
   ports:
    - "3000:3000"
   tty: true
   stdin_open: true
-volumes:
-  bundle_path:

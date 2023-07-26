@@ -43,4 +43,4 @@ COPY --chown=${USERNAME}:${USERNAME} --from=bundle ${GEM_HOME} ${GEM_HOME}
 COPY --chown=${USERNAME}:${USERNAME} . ${WORKDIR}
 USER ${USERNAME}:${USERNAME}
 EXPOSE 3000
-ENTRYPOINT ["./docker-entrypoint.sh"]
+CMD bundle exec rails server -b "0.0.0.0" -p 3000

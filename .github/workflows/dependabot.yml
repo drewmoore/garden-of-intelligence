@@ -1,0 +1,31 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "11:00"
+    timezone: Europe/Berlin
+  labels:
+  - dependency
+  ignore:
+  # ignore major releases
+  - dependency-name: "*"
+    update-types: ["version-update:semver-major"]
+  # Only create PRs to update lockfiles. Ignore any new versions that would require package manifest changes.
+  versioning-strategy: lockfile-only
+  commit-message:
+    prefix: chore
+    # 'scope' specifies that any prefix is followed by a list of the dependencies updated in the commit.
+    include: scope
+- package-ecosystem: docker
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "11:00"
+    timezone: Europe/Berlin
+  labels:
+  - dependency
+  commit-message:
+    prefix: chore
+    include: scope

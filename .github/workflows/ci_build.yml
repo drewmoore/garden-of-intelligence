@@ -1,0 +1,62 @@
+# ToDo: save secrets in github secrets
+
+name: CI
+
+on: [push]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build:
+    name: Test and Deploy
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    env:
+      APPLICATION_IMAGE_BUILD: ${{secrets.AWS_ECR_URL}}:sha-${{github.sha}}
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Build docker image
+        run: |
+          docker build \
+           --tag $APPLICATION_IMAGE_BUILD \
+           --build-arg CODE_VERSION="${{github.sha}}" \
+           --compress  \
+           .
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
+          role-session-name: samplerolesession
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to AWS ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} |
+            docker login --username AWS --password-stdin `echo ${{ secrets.AWS_ECR_URL }} | cut -d/ -f1`
+
+      - name: Push docker image to Amazon ECR
+        run: |
+          docker push $APPLICATION_IMAGE_BUILD
+          docker logout

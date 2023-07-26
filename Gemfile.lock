@@ -90,7 +90,6 @@ GEM
     erubi (1.11.0)
     faker (3.0.0)
       i18n (>= 1.8.11, < 2)
-    foreman (0.87.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
@@ -129,6 +128,8 @@ GEM
     nokogiri (1.13.9-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.9-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     pg (1.5.3)
     public_suffix (5.0.0)
@@ -215,13 +216,13 @@ PLATFORMS
   arm64-darwin-21
   arm64-darwin-22
   x86_64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
   capybara
   debug
   faker
-  foreman
   importmap-rails
   jbuilder
   pg (~> 1.4, >= 1.4.2)

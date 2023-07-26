@@ -78,7 +78,13 @@ performs a plan just like terraform plan does, but then actually carries out the
 - Check whether the configuration is valid
 
 
-## Deploy code
+## Deploy code via CI
+
+Whenever there's a push on the production-branch it will automatically build a docker image, push it to ECR and auto-deploy on the AWS Apprunner. If you want to test your changes on production just merge them to the deployment-branch. Whenever you merge your PR to main you can also merge your changes into the production-branch.
+
+For deployment logs check the AWS Apprunner in the sandbox account. 
+
+## Deploy code from local machine
 
 You can get the `ecr_repository_url` with
 ```sh

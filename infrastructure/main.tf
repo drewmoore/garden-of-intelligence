@@ -2,7 +2,7 @@
 # APPRUNNER
 # ---------------------------------------------------------------------------------------------------------------------
 resource "aws_apprunner_service" "garden_of_intelligence" {
-  service_name = "garden-of-intelligence"
+  service_name = var.APP_NAME
 
   source_configuration {
     authentication_configuration {
@@ -30,7 +30,7 @@ resource "aws_apprunner_service" "garden_of_intelligence" {
 }
 
 resource "aws_apprunner_vpc_connector" "connector" {
-  vpc_connector_name = "garden_of_intelligence_vpc_connector"
+  vpc_connector_name = "${var.APP_NAME}_vpc_connector"
   subnets            = aws_subnet.private[*].id
   security_groups    = [aws_security_group.db-sg.id]
 }

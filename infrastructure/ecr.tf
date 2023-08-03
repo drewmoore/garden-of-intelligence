@@ -10,7 +10,7 @@ resource "aws_ecr_repository" "garden-of-intelligence" {
 
 data "aws_iam_policy_document" "ecr-garden-full-access" {
   statement {
-    actions   = [
+    actions = [
       "ecr:GetDownloadUrlForLayer",
       "ecr:BatchGetImage",
       "ecr:BatchCheckLayerAvailability",

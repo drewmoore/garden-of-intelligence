@@ -47,6 +47,8 @@ jobs:
            --compress  \
            .
 
+      # TODO: ERROR:
+      #    Error: Not authorized to perform sts:AssumeRoleWithWebIdentity
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:

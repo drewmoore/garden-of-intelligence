@@ -57,3 +57,20 @@ data "aws_iam_policy_document" "repo-assume-role" {
     }
   }
 }
+
+resource "aws_iam_role_policy" "repo-ecr-upload" {
+  role   = aws_iam_role.repo.name
+  name   = "ecr-${var.APP_NAME}-ci-upload"
+  policy = data.aws_iam_policy_document.repo-ecr-upload.json
+}
+
+data "aws_iam_policy_document" "repo-ecr-upload" {
+  statement {
+    actions = [
+      "ecr:GetAuthorizationToken",
+      "ecr:PutImage",
+    ]
+
+    resources = [aws_ecr_repository.garden-of-intelligence.arn]
+  }
+}

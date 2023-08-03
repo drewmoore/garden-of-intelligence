@@ -1,6 +1,6 @@
 # Configure the AWS ECR
 resource "aws_ecr_repository" "garden-of-intelligence" {
-  name                 = "garden-of-intelligence"
+  name                 = var.APP_NAME
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {

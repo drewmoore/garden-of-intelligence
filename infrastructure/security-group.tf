@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "aws_security_group" "db-sg" {
-  name        = "postgres-garden-of-intelligence"
+  name        = "postgres-${var.APP_NAME}"
   description = "Access to the RDS instances from the VPC"
   vpc_id      = aws_vpc.main.id
 

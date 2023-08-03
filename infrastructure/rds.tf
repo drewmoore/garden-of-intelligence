@@ -2,7 +2,7 @@
 # RDS DB SUBNET GROUP
 # ---------------------------------------------------------------------------------------------------------------------
 resource "aws_db_subnet_group" "db-subnet-grp" {
-  name        = "garden-of-intelligence-db-sgrp"
+  name        = "${var.APP_NAME}-db-sgrp"
   description = "Database Subnet Group"
   subnet_ids  = aws_subnet.private.*.id
 }
@@ -12,7 +12,7 @@ resource "aws_db_subnet_group" "db-subnet-grp" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "aws_db_instance" "db" {
-  identifier = "garden-of-intelligence"
+  identifier = var.APP_NAME
 
   engine         = "postgres"
   engine_version = "13.10"
@@ -23,6 +23,7 @@ resource "aws_db_instance" "db" {
   allocated_storage = 20
 
   username = "root"
+  # TODO: generate and hide
   password = "05cd8d797da4fb88a199c14294b5966fe9276e7c61c5476116addcf44facab4aa77a12541050c25312f3fd20f839cea4b2cdb1b42bfade1dd612027f6a1d4a01"
 
   multi_az = false

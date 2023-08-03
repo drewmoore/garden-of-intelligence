@@ -13,7 +13,7 @@ resource "aws_vpc" "main" {
   enable_dns_support   = true
   enable_dns_hostnames = true
   tags = {
-    Name = "garden-of-intelligence-VPC"
+    Name = "${var.APP_NAME}-VPC"
   }
 }
 
@@ -22,11 +22,11 @@ resource "aws_vpc" "main" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "aws_subnet" "private" {
-  count             = 2
+  count             = length(data.aws_availability_zones.available.names)
   cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)
-  #availability_zone = data.aws_availability_zones.available.names[count.index]
+  availability_zone = data.aws_availability_zones.available.names[count.index]
   vpc_id            = aws_vpc.main.id
   tags = {
-    Name = "garden-of-intelligence-PrivateSubnet-${count.index + 1}"
+    Name = "${var.APP_NAME}-PrivateSubnet-${count.index + 1}"
   }
 }

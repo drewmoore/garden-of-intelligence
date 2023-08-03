@@ -54,9 +54,6 @@ jobs:
           role-session-name: samplerolesession
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # An error occurred (AccessDeniedException) when calling the GetAuthorizationToken operation: User: arn:aws:sts::***:assumed-role/github-actions-garden-of-andrew/samplerolesession is not authorized to perform: ecr:GetAuthorizationToken on resource: * because no identity-based policy allows the ecr:GetAuthorizationToken action
-      # Error: Cannot perform an interactive login from a non TTY device
-      # Error: Process completed with exit code 1.
       - name: Login to AWS ECR
         run: |
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} |

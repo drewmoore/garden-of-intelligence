@@ -67,10 +67,30 @@ resource "aws_iam_role_policy" "repo-ecr-upload" {
 data "aws_iam_policy_document" "repo-ecr-upload" {
   statement {
     actions = [
-      "ecr:GetAuthorizationToken",
       "ecr:PutImage",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload",
     ]
 
     resources = [aws_ecr_repository.garden-of-intelligence.arn]
   }
 }
+
+resource "aws_iam_role_policy" "repo-ecr-auth" {
+  role   = aws_iam_role.repo.name
+  name   = "ecr-${var.APP_NAME}-ci-auth"
+  policy = data.aws_iam_policy_document.repo-ecr-auth.json
+}
+
+data "aws_iam_policy_document" "repo-ecr-auth" {
+  statement {
+    actions = [
+      "ecr:GetAuthorizationToken",
+    ]
+
+    resources = ["*"]
+  }
+}
+

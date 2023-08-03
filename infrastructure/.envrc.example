@@ -6,3 +6,11 @@ export AWS_PROFILE=
 
 # Give this a unique app name so that it doesn't conflict with other developers' experimentation in the sandbox
 export TF_VAR_APP_NAME=
+
+# This repo can be set dynamically so that it can be used by multiple devs
+export TF_VAR_REPO_PATH=
+
+# Your personal access token. Note that this will likely differ from others you may be using, such as for reading packages.
+# This token will need permission to read and write repository secrets, plus any new resources as they are added to this
+# project's infra setup.
+export TF_VAR_GITHUB_TOKEN=

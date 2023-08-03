@@ -31,6 +31,7 @@ data "aws_iam_policy_document" "ecr-garden-full-access" {
   }
 }
 
+# TODO: will this be needed after adding secrets to repo ci?
 output "ecr_repository_url" {
   value = aws_ecr_repository.garden-of-intelligence.repository_url
 }

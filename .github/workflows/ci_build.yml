@@ -1,5 +1,3 @@
-# ToDo: save secrets in github secrets
-
 name: CI
 
 on:

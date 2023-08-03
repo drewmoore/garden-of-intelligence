@@ -6,3 +6,6 @@ export AWS_PROFILE=
 
 # Give this a unique app name so that it doesn't conflict with other developers' experimentation in the sandbox
 export TF_VAR_APP_NAME=
+
+# This repo can be set dynamically so that it can be used by multiple devs
+export TF_VAR_REPO_PATH=

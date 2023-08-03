@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "app-garden-of-intelligence-assume-role" {
 }
 
 resource "aws_iam_role_policy_attachment" "myrolespolicy" {
-  role = aws_iam_role.app-garden-of-intelligence.id
+  role       = aws_iam_role.app-garden-of-intelligence.id
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
 }
 

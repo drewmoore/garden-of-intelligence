@@ -20,3 +20,7 @@ provider "aws" {
   region  = "eu-west-1"
   profile = "sandbox"
 }
+
+provider "github" {
+  token = var.GITHUB_TOKEN
+}

@@ -3,6 +3,10 @@ variable "APP_NAME" {
   default = "garden-of-intelligence"
 }
 
+variable "GITHUB_TOKEN" {
+  type = string
+}
+
 variable "REPO_PATH" {
   type    = string
   default = "VJMueller/garden-of-intelligence"
